@@ -3,8 +3,6 @@ from datetime import datetime
 import os
 
 # Nettoyage des données
-
-
 def cleaner_function(
     path_in="output/annonces.csv", path_out="output/annonces_clean.csv"
 ):

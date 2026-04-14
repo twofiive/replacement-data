@@ -35,11 +35,10 @@ Projet final
 
 ### Utilisation
 
-
 1. Lancer la collecte
    ```bash
    python main.py
    ```
-3. Les résultats sont disponibles dans `output/annonces.csv`.
+2. Les résultats sont disponibles dans `output/annonces.csv`.
 
 ---
