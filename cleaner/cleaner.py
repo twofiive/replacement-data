@@ -8,7 +8,13 @@ def cleaner_function(
 ):
     df = pd.read_csv(path_in, encoding="utf-8", encoding_errors="replace")
 
-    df.fillna("", inplace=True)
+    # Remplacement des NaN selon le type de colonne
+    for col in df.columns:
+        if df[col].dtype in ['float64', 'int64']:
+            df[col] = df[col].fillna(0)
+        else:
+            df[col] = df[col].fillna("")
+            
     df.drop_duplicates(subset=["lien_annonce"], keep="first", inplace=True)
 
     for col in df.select_dtypes(include=["object"]).columns:

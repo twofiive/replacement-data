@@ -46,7 +46,7 @@ if __name__ == "__main__":
             item["id"] = i
 
         # Sauvegarde des données brutes dans un fichier CSV
-        output_path = r"C:\Users\hugoc\Documents\ECE\Aggregation de données\Projet final\output\annonces.csv"
+        output_path = r"output/annonces_brutes.csv"
         save_to_csv(data, output_path)
 
         print(f"\nExport terminé : {output_path}")

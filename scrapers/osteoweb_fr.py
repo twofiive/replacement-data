@@ -8,6 +8,7 @@ import re
 def get_remplacement_links():
     url = "https://www.osteoweb.fr/remplacement/"
     r = requests.get(url)
+    r.encoding = 'utf-8'  # Forcer l'encodage UTF-8
     soup = BeautifulSoup(r.text, "html.parser")
     liens = set()
     for a in soup.select('a[href^="https://www.osteoweb.fr/"]'):
@@ -23,6 +24,7 @@ def get_info_remplacement():
     data = []
     for lien in liens:
         r = requests.get(lien)
+        r.encoding = 'utf-8'  # Forcer l'encodage UTF-8
         soup = BeautifulSoup(r.text, "html.parser")
 
         type_offre = ""

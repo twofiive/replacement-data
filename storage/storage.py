@@ -7,8 +7,9 @@ def save_to_csv(data, filename="output/annonces.csv"):
     if not data:
         print("Aucune donnée à enregistrer.")
         return
-    # Clés dans l'ordre souhaité
-    keys = [
+
+    # Clés de base dans l'ordre souhaité
+    keys_base = [
         "id",
         "source",
         "titre",
@@ -22,13 +23,35 @@ def save_to_csv(data, filename="output/annonces.csv"):
         "lien_annonce",
     ]
 
-    # Supprimer les accents
+    # Nouvelles colonnes OpenData INSEE
+    keys_opendata = [
+        "latitude",
+        "longitude",
+        "code_postal",
+        "nom_departement",
+    ]
+
+    # Colonnes finales : base + opendata
+    keys = keys_base + keys_opendata
+
+    # Suppression des accents sur les colonnes texte uniquement
+    # Les colonnes numériques (latitude, longitude) sont préservées
     cleaned_data = []
     for d in data:
-        row = {k: unidecode(str(d.get(k, ""))) for k in keys}
+        row = {}
+        for k in keys:
+            val = d.get(k, "")
+            if k in ("latitude", "longitude"):
+                # Conserver la valeur numérique telle quelle
+                row[k] = str(val) if val != "" else ""
+            else:
+                row[k] = unidecode(str(val)) if val != "" else ""
         cleaned_data.append(row)
+
     # Écriture dans le fichier CSV
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
         writer.writerows(cleaned_data)
+
+    print(f"Fichier sauvegardé : {filename} ({len(cleaned_data)} lignes)")
